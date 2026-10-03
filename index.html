@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Roadmap Quest</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--tx:#1b2433;--mu:#66738a;--ac:#0f7b7b;--ac2:#14325c;--ok:#1f9d55;--bd:#dde3ec;--gold:#e9a400}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1320;--card:#172033;--tx:#e8edf5;--mu:#93a1b8;--ac:#35c2b8;--ac2:#7aa7ff;--ok:#4cd58a;--bd:#2a3550;--gold:#ffc83d}}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+main{max-width:860px;margin:0 auto;padding:16px 14px calc(88px + env(safe-area-inset-bottom,0px));padding-top:calc(16px + env(safe-area-inset-top,0px))}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--mu);padding:9px 2px;font:inherit;font-size:11px;cursor:pointer}
+nav button b{display:block;font-size:20px;font-weight:400}nav button.on{color:var(--ac);font-weight:700}
+@media(min-width:820px){nav{top:0;bottom:0;right:auto;width:190px;flex-direction:column;border-top:0;border-right:1px solid var(--bd);padding:20px 8px;gap:4px}
+nav button{flex:0;text-align:left;font-size:15px;padding:11px 12px;border-radius:10px}nav button b{display:inline;margin-right:8px;font-size:18px}nav button.on{background:var(--bg)}
+main{margin-left:190px;max-width:none;padding:24px 32px}main>div{max-width:860px}}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:18px 0 8px}small,.mu{color:var(--mu)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.sp{flex:1}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2));border-radius:9px;transition:width .4s}
+.blk{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:13px;margin-bottom:8px;font:inherit;cursor:pointer}
+.blk.d{background:color-mix(in srgb,var(--ok) 15%,var(--card));border-color:var(--ok)}
+.blk .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--mu);display:grid;place-items:center;font-size:15px;color:#fff}.blk.d .ck{background:var(--ok);border-color:var(--ok)}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--bd)}
+.xp{color:var(--gold);font-weight:700}
+.stat{text-align:center}.stat b{display:block;font-size:26px}
+button.p,button.s{font:inherit;border-radius:10px;padding:9px 14px;cursor:pointer;border:1px solid var(--ac)}
+button.p{background:var(--ac);color:#fff}button.s{background:none;color:var(--ac)}button:disabled{opacity:.45;cursor:default}
+input,textarea{width:100%;font:inherit;padding:9px 11px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);margin:4px 0}
+.dots{display:flex;gap:6px}.dots span{flex:1;text-align:center;font-size:11px;color:var(--mu)}.dots i{display:block;height:28px;border-radius:8px;background:var(--bd);margin-bottom:3px}.dots i.on{background:var(--ok)}
+.it{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);cursor:pointer;align-items:flex-start}.it:last-child{border:0}.it.d span{text-decoration:line-through;color:var(--mu)}
+.bd{opacity:.35;filter:grayscale(1)}.bd.on{opacity:1;filter:none}.badge{text-align:center;font-size:12px;padding:10px}.badge b{display:block;font-size:30px}
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:var(--ac2);color:#fff;padding:9px 16px;border-radius:99px;z-index:9;opacity:0;transition:.3s;pointer-events:none}#toast.on{opacity:1}
+.wide-note{display:none}main.wide{max-width:none;display:grid;grid-template-columns:minmax(320px,410px) 1fr;gap:28px;align-items:start}main.wide>div{max-width:none;min-width:0}.login{max-width:380px;margin:12vh auto;padding:0 16px}
+</style></head><body>
+<div id="toast"></div><div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+// ====== PASTE YOUR SUPABASE VALUES HERE (see README). Leave empty to run offline. ======
+const SB_URL="https://supabase.com/dashboard/project/uerfvcjvgkdmkhvbfzeb", SB_KEY="sb_publishable_NRX9pseEXrg4CKPMCBueTA_y85qyD-G";
+// ========================================================================================
+const BLOCKS=[["code","Coding","💻"],["math","Math (Khan Academy)","➗"],["read","English reading (20 min)","📖"],["write","English writing (5 sentences)","✍️"],["git","Push to GitHub","🐙"]];
+const ROAD=[
+["Rest of Class 8",["Create GitHub account + profile","Install Python and run a program","Finish about half of CS50P","Write 2-3 tiny programs yourself","Start Khan Academy math","Keep the routine going 6+ weeks","Write 20+ English journal entries"]],
+["Class 9",["Finish CS50P and Python fundamentals","Learn Git basics (commit, push, branches)","Finish 2 small projects on GitHub","Reach 90%+ in math and science","Finish algebra, start precalculus","Read 6+ English books or long articles","Write 6+ short English pieces","Try beginner problems on Codeforces or CSES"]],
+["Class 10 (SSC)",["Build 2-3 projects with real users","Write a README for each project","Collect feedback from 3-5 real users per project","Try one competition (BdMO, BdIO or hackathon)","Learn web basics or a game engine","Write a 500-word English piece without major errors","Get GPA 5.00 in SSC"]],
+["Class 11",["Choose and publish your flagship project","Take a practice SAT (baseline)","Study weak SAT areas for 3-4 months","Take the SAT","Take IELTS, TOEFL or Duolingo","Pick 2 recommenders and brief them","Draft a list of 12-15 universities","Check aid policy of every listed university"]],
+["Class 12",["Write essay drafts (4-5 versions)","Finalize university list with reach and safe schools","Prepare financial documents for aid forms","Submit applications before deadlines","Submit financial aid forms","Confirm recommendations and scores arrived","Finish HSC with strong results"]]];
+const BADGES=[["🌱","First step","Complete a block",c=>c.blocks>=1],["🔥","3-day streak","3 days in a row",c=>c.best>=3],["⚡","7-day streak","7 days in a row",c=>c.best>=7],["🏆","30-day streak","30 days in a row",c=>c.best>=30],["⭐","Perfect day","All 5 blocks in a day",c=>c.perfect>=1],["🛠️","Builder","Finish a project",c=>c.done>=1],["🗺️","Explorer","25% of roadmap",c=>c.road>=.25],["🚀","Halfway","50% of roadmap",c=>c.road>=.5],["📝","Reflector","3 weekly reviews",c=>c.rev>=3],["💎","Level 5","Reach level 5",c=>c.lvl>=5],["🏅","Competitor","Log a competition",c=>c.comp>=1],["🎓","Test taker","Log a test result",c=>c.tests>=1]];
+const DEF_REW=[["1 hour of free gaming",100],["Favorite snack",60],["Movie night",250],["Free evening, no tasks",400]];
+let S=JSON.parse(localStorage.rm||"null")||{days:{},items:{},projects:[],reviews:[],spent:0,log:[],rewards:DEF_REW};
+const fix=()=>["courses","eng","comp","tests","unis"].forEach(k=>S[k]=S[k]||[]);fix();
+let sb=null,user=null,tab="today",local=false,status="",timer;
+const $=s=>document.querySelector(s),E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const iso=d=>d.toLocaleDateString("en-CA"),T=()=>iso(new Date()),add=(d,n)=>{const x=new Date(d+"T00:00");x.setDate(x.getDate()+n);return iso(x)};
+const dayB=d=>(S.days[d]&&S.days[d].b)||[];
+function toast(m){const t=$("#toast");t.textContent=m;t.className="on";clearTimeout(t.h);t.h=setTimeout(()=>t.className="",1600)}
+function calc(){const ds=Object.keys(S.days).filter(d=>dayB(d).length);let blocks=0,perfect=0;ds.forEach(d=>{blocks+=dayB(d).length;if(dayB(d).length>=BLOCKS.length)perfect++});
+ let best=0,run=0,prev=null;ds.sort().forEach(d=>{run=prev&&add(prev,1)===d?run+1:1;best=Math.max(best,run);prev=d});
+ let cur=0,d=dayB(T()).length?T():add(T(),-1);while(dayB(d).length){cur++;d=add(d,-1)}
+ const total=ROAD.reduce((a,r)=>a+r[1].length,0),itd=Object.keys(S.items).filter(k=>S.items[k]).length,done=S.projects.filter(p=>p.s==="Done").length;
+ const n=k=>(S[k]||[]).length,sub=(S.unis||[]).filter(u=>u.s==="Submitted"||u.s==="Result").length;const xp=blocks*10+perfect*20+itd*25+done*100+S.reviews.length*30+(n("comp")+n("tests"))*20+n("eng")*5+sub*30,lvl=Math.floor(Math.sqrt(xp/40))+1;
+ return{blocks,perfect,best,cur,xp,lvl,itd,total,done,road:itd/total,rev:S.reviews.length,comp:n("comp"),tests:n("tests"),avail:xp-S.spent,lo:40*(lvl-1)**2,hi:40*lvl*lvl}}
+function save(){localStorage.rm=JSON.stringify(S);if(!sb||!user)return;st("Saving…");clearTimeout(timer);timer=setTimeout(async()=>{const{error}=await sb.from("progress").upsert({user_id:user.id,data:S,updated_at:new Date().toISOString()});st(error?"Sync failed - retry later":"Synced ✓")},600)}
+function st(t){status=t;const e=$("#st");if(e)e.textContent=t}
+async function pull(){const{data}=await sb.from("progress").select("data").eq("user_id",user.id).maybeSingle();if(data&&data.data&&data.data.days){S=data.data;S.rewards=S.rewards||DEF_REW;fix();localStorage.rm=JSON.stringify(S)}else save();st("Synced ✓")}
+function bar(p){return`<div class="bar"><i style="width:${Math.round(Math.max(0,Math.min(1,p))*100)}%"></i></div>`}
+function view(tab){const c=calc(),t=T();
+ if(tab==="today"){const b=dayB(t),last7=[...Array(7)].map((_,i)=>add(t,i-6));
+ return`<h1>Today</h1><p class="mu">${new Date().toDateString()} · never skip two days in a row</p>
+ <div class="grid"><div class="card stat"><b>🔥 ${c.cur}</b><small>day streak (best ${c.best})</small></div><div class="card"><div class="row"><b>Level ${c.lvl}</b><span class="sp"></span><span class="xp">${c.xp} XP</span></div>${bar((c.xp-c.lo)/(c.hi-c.lo))}<small>${c.hi-c.xp} XP to level ${c.lvl+1}</small></div></div>
+ <h2>Today's quests <span class="pill">${b.length}/${BLOCKS.length}</span></h2>
+ ${BLOCKS.map(x=>`<button class="blk ${b.includes(x[0])?"d":""}" data-a="blk" data-k="${x[0]}"><span class="ck">${b.includes(x[0])?"✓":""}</span><span style="font-size:22px">${x[2]}</span><span class="sp">${x[1]}</span><span class="xp">+10</span></button>`).join("")}
+ <small class="mu">Finish all 5 for a +20 XP perfect-day bonus.</small>
+ <h2>Note for today</h2><textarea rows="3" data-a="note" placeholder="What did you learn? What was hard?">${E((S.days[t]||{}).note)}</textarea>
+ <h2>Last 7 days</h2><div class="dots">${last7.map(d=>`<span><i class="${dayB(d).length?"on":""}"></i>${new Date(d+"T00:00").toLocaleDateString("en",{weekday:"short"})}</span>`).join("")}</div>`}
+ if(tab==="road")return`<h1>Roadmap</h1><p class="mu">${c.itd}/${c.total} done · each item +25 XP</p><div class="card">${bar(c.road)}</div>
+ ${ROAD.map((r,si)=>{const n=r[1].filter((_,i)=>S.items[si+"."+i]).length;return`<div class="card"><div class="row"><b>${r[0]}</b><span class="sp"></span><span class="pill">${n}/${r[1].length}</span></div>${bar(n/r[1].length)}<div style="margin-top:8px">${r[1].map((x,i)=>`<div class="it ${S.items[si+"."+i]?"d":""}" data-a="item" data-k="${si}.${i}"><span>${S.items[si+"."+i]?"✅":"⬜"}</span><span>${E(x)}</span></div>`).join("")}</div></div>`}).join("")}`;
+ if(tab==="proj")return`<h1>Projects</h1><p class="mu">Finishing a project gives +100 XP</p>
+ <div class="card"><input id="pn" placeholder="New project name"><input id="pl" placeholder="GitHub or live link (optional)"><button class="p" data-a="padd">Add project</button></div>
+ ${S.projects.map((p,i)=>`<div class="card"><div class="row"><b class="sp">${E(p.n)}</b><button class="s" data-a="pst" data-k="${i}">${p.s}</button></div>${p.l?`<a href="${E(p.l)}" target="_blank" rel="noopener">${E(p.l)}</a>`:""}<textarea rows="2" data-a="pnote" data-k="${i}" placeholder="Users, feedback, what to improve">${E(p.note)}</textarea><button class="s" data-a="pdel" data-k="${i}">Delete</button></div>`).join("")||'<p class="mu">No projects yet. Start with something small you can finish.</p>'}`;
+ if(tab==="track")return`<h1>Track</h1><p class="mu">Courses, English practice and competitions</p>${sec("courses")}${sec("eng")}${sec("comp")}`;
+ if(tab==="apply")return`<h1>Apply</h1><p class="mu">Tests and university applications. Always check each university's official site for current rules.</p>${sec("tests")}${sec("unis")}`;
+ if(tab==="rev")return`<h1>Weekly review</h1><p class="mu">Each review gives +30 XP</p>
+ <div class="card"><textarea id="r1" rows="2" placeholder="What did I learn this week?"></textarea><textarea id="r2" rows="2" placeholder="What confused me?"></textarea><textarea id="r3" rows="2" placeholder="My plan for next week"></textarea><button class="p" data-a="radd">Save review</button></div>
+ ${S.reviews.slice().reverse().map(r=>`<div class="card"><b>${r.w}</b><p><small>Learned</small><br>${E(r.a)}</p><p><small>Confusing</small><br>${E(r.b)}</p><p><small>Next</small><br>${E(r.c)}</p></div>`).join("")}`;
+ const bc={blocks:c.blocks,best:c.best,perfect:c.perfect,done:c.done,road:c.road,rev:c.rev,lvl:c.lvl,comp:c.comp,tests:c.tests};
+ return`<h1>Rewards</h1><div class="card"><div class="row"><b class="sp">Available XP</b><span class="xp" style="font-size:24px">${c.avail}</span></div><small>Total earned ${c.xp} · spent ${S.spent}</small></div>
+ <h2>Reward shop</h2>${S.rewards.map((r,i)=>`<div class="card row"><span class="sp">${E(r[0])}</span><span class="xp">${r[1]} XP</span><button class="p" data-a="buy" data-k="${i}" ${c.avail<r[1]?"disabled":""}>Redeem</button><button class="s" data-a="rdel" data-k="${i}">✕</button></div>`).join("")}
+ <div class="card"><input id="rn" placeholder="Add your own reward"><input id="rc" type="number" min="10" placeholder="Cost in XP"><button class="p" data-a="radd2">Add reward</button></div>
+ <h2>Badges</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))">${BADGES.map(b=>`<div class="card badge bd ${b[3](bc)?"on":""}"><b>${b[0]}</b>${b[1]}<br><small>${b[2]}</small></div>`).join("")}</div>
+ ${S.log.length?`<h2>Redeemed</h2>${S.log.slice(-8).reverse().map(l=>`<small>${l}</small><br>`).join("")}`:""}`}
+const SECT={courses:["📚 Courses and units",[["n","Course / unit (e.g. CS50P lecture 3)"],["p","Progress (e.g. 5/10)"]]],
+eng:["📖 English log (+5 XP each)",[["t","Book, piece or new words"],["d","Details / count"]]],
+comp:["🏅 Competitions (+20 XP each)",[["n","Competition"],["d","Date"],["r","Result / what I learned"]]],
+tests:["📊 Tests: SAT, IELTS, TOEFL... (+20 XP each)",[["n","Test (practice or real)"],["d","Date"],["r","Score"]]],
+unis:["🎓 Universities (+30 XP when submitted)",[["n","University"],["c","Country"],["d","Deadline"],["a","Aid for international students"]]]};
+const UST=["Researching","Applying","Submitted","Result"];
+function sec(k){const[h,f]=SECT[k],L=S[k]||[];return`<div class="card"><div class="row"><b class="sp">${h}</b><span class="pill">${L.length}</span></div>${L.map((o,i)=>`<div class="it" style="cursor:default"><span class="sp">${f.map(x=>E(o[x[0]])).filter(Boolean).join(" · ")}</span>${k==="unis"?`<button class="s" data-a="lst" data-k="${i}">${o.s||UST[0]}</button>`:""}<button class="s" data-a="ldel" data-k="${k}.${i}">✕</button></div>`).join("")}<div style="margin-top:8px">${f.map(x=>`<input id="f_${k}_${x[0]}" placeholder="${x[1]}">`).join("")}<button class="p" data-a="ladd" data-k="${k}">Add</button></div></div>`}
+function render(){
+ if(SB_URL&&!user&&!local){$("#app").innerHTML=`<div class="login card"><h1>Roadmap Quest</h1><p class="mu">Sign in to sync your progress on every device.</p><input id="em" type="email" placeholder="Email" autocomplete="email"><input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="current-password"><div class="row"><button class="p" data-a="in">Sign in</button><button class="s" data-a="up">Create account</button></div><p id="msg" class="mu"></p><button class="s" data-a="off">Continue without account</button></div>`;return}
+ const wide=innerWidth>=1100;if(wide&&tab==="today")tab="road";const tabs=[["today","🎯","Today"],["road","🗺️","Roadmap"],["proj","🛠️","Projects"],["track","📚","Track"],["apply","🎓","Apply"],["rev","📝","Review"],["rew","🎁","Rewards"]],tl=wide?tabs.slice(1):tabs;
+ $("#app").innerHTML=`<nav>${tl.map(t=>`<button class="${tab===t[0]?"on":""}" data-a="tab" data-k="${t[0]}"><b>${t[1]}</b>${t[2]}</button>`).join("")}</nav><main class="${wide?"wide":""}">${wide?`<div>${view("today")}</div>`:""}<div>${view(tab)}<p class="mu" style="margin-top:24px"><small id="st">${status||(sb&&user?"Synced ✓":"Offline mode: saved on this device only")}</small> ${user?`· <a href="#" data-a="out">Sign out</a>`:""}</small></p></div></main>`}
+document.addEventListener("click",async e=>{const el=e.target.closest("[data-a]");if(!el)return;const a=el.dataset.a,k=el.dataset.k,t=T();if(a==="out")e.preventDefault();
+ if(a==="tab")tab=k;
+ else if(a==="blk"){const d=S.days[t]=S.days[t]||{b:[],note:""};const had=d.b.length>=BLOCKS.length;d.b=d.b.includes(k)?d.b.filter(x=>x!==k):[...d.b,k];toast(d.b.includes(k)?"+10 XP":"Undone");if(!had&&d.b.length>=BLOCKS.length)toast("⭐ Perfect day! +20 XP bonus")}
+ else if(a==="item"){const was=S.items[k];S.items[k]=!was;if(!was)toast("+25 XP")}
+ else if(a==="padd"){const n=$("#pn").value.trim();if(!n)return;S.projects.push({n,l:$("#pl").value.trim(),s:"Idea",note:""})}
+ else if(a==="pst"){const p=S.projects[k],o=["Idea","Building","Done"];p.s=o[(o.indexOf(p.s)+1)%3];if(p.s==="Done")toast("🛠️ Project finished! +100 XP")}
+ else if(a==="pdel"){if(confirm("Delete this project?"))S.projects.splice(k,1);else return}
+ else if(a==="radd"){const a1=$("#r1").value.trim(),b1=$("#r2").value.trim(),c1=$("#r3").value.trim();if(!a1&&!b1&&!c1)return;S.reviews.push({w:new Date().toDateString(),a:a1,b:b1,c:c1});toast("+30 XP")}
+ else if(a==="buy"){const r=S.rewards[k];if(calc().avail<r[1])return;S.spent+=r[1];S.log.push(new Date().toDateString()+" - "+r[0]);toast("Enjoy: "+r[0])}
+ else if(a==="rdel"){S.rewards.splice(k,1)}
+ else if(a==="radd2"){const n=$("#rn").value.trim(),c=parseInt($("#rc").value);if(!n||!(c>0))return;S.rewards.push([n,c])}
+ else if(a==="ladd"){const f=SECT[k][1],o={};f.forEach(x=>o[x[0]]=$("#f_"+k+"_"+x[0]).value.trim());if(!o[f[0][0]])return;if(k==="unis")o.s=UST[0];S[k].push(o);toast(k==="eng"?"+5 XP":k==="unis"?"Added":"+20 XP")}
+ else if(a==="ldel"){const[kk,i]=k.split(".");if(confirm("Delete this entry?"))S[kk].splice(i,1);else return}
+ else if(a==="lst"){const u=S.unis[k];u.s=UST[(UST.indexOf(u.s||UST[0])+1)%4];if(u.s==="Submitted")toast("Submitted! +30 XP")}
+ else if(a==="off"){local=true}
+ else if(a==="out"){await sb.auth.signOut();user=null}
+ else if(a==="in"||a==="up"){const m=$("#msg");m.textContent="Please wait…";const f=a==="in"?sb.auth.signInWithPassword:sb.auth.signUp;const{data,error}=await f.call(sb.auth,{email:$("#em").value.trim(),password:$("#pw").value});
+  if(error){m.textContent=error.message;return}if(a==="up"&&!data.session){m.textContent="Check your email to confirm, then sign in.";return}user=data.session.user;await pull()}
+ save();render()});
+document.addEventListener("change",e=>{const el=e.target,a=el.dataset.a;if(a==="note"){const t=T();S.days[t]=S.days[t]||{b:[],note:""};S.days[t].note=el.value;save()}if(a==="pnote"){S.projects[el.dataset.k].note=el.value;save()}});
+let W=innerWidth>=1100;addEventListener("resize",()=>{const n=innerWidth>=1100;if(n!==W){W=n;render()}});
+(async()=>{if(SB_URL&&window.supabase){sb=supabase.createClient(SB_URL,SB_KEY);const{data}=await sb.auth.getSession();user=data.session?data.session.user:null;if(user)await pull()}render()})();
+</script></body></html>
