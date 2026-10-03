@@ -160,7 +160,7 @@ document.addEventListener("click",async e=>{const el=e.target.closest("[data-a]"
  else if(a==="qa"){ans[Q[qi][0]]=k;qi++;if(qi>=Q.length)qs="sum"}
  else if(a==="edit"){qs="q";qi=0}
  else if(a==="conf"){const note=($("#nt")||{}).value||"";qs="load";render();let road=null,msg="";
-  if(sb&&user&&!S.aiUsed){try{const{data,error}=await sb.functions.invoke("roadmap",{body:{answers:ans,note}});
+  if(sb&&user&&!S.aiUsed){try{const{data,error}=await sb.functions.invoke("roadmap",{body:{answers:ans,note,base:gen(ans)}});
    if(data&&data.road){road=data.road;S.aiUsed=true}else if(data&&data.used){S.aiUsed=true;msg="Your one AI roadmap was already used, so we built a standard one."}else msg="AI is unavailable right now, so we built a standard roadmap. Retake the questionnaire from Profile to try AI again."}catch(x){msg="AI is unavailable right now, so we built a standard roadmap. Retake the questionnaire from Profile to try AI again."}}
   S.profile=ans;S.road=road||gen(ans);S.blocks=mkBlocks(ans);ans={};qi=0;qs="q";fix();toast(msg||"Your roadmap is ready!")}
  else if(a==="qb"){qi=Math.max(0,qi-1)}
